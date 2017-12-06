@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1 style="font-size: 22px"> 用户中心 </h1>
+<p style="margin-left: 20px;font-size: 18px;color: red"> 欢迎 {{ username }} </p>
+<div style="width:150px;height: 180px;border: 1px solid #AD7979;margin-left: 20px;display: inline-block">
+	<div style="width: 110px;height: 120px;margin: 10px auto;border: 1px solid #66A9F7">
+		<img src="{{ avatar }}" alt="用户头像" width="110px" height="120px">
+		
+	</div>
+	<div style="width: 72px;margin: 10px auto">
+		<a href="/upload">
+		<!-- <a> -->
+			<input type="button" value="更换头像" style="color: #2242A6">
+		</a>
+		</div>
+</div>
+<div style="width: 400px;min-height: 400px;display: inline-block;margin-left: 20px">
+	<h1>文章列表</h1>
+	<ul>
+		{% for art in articles %}
+		<li>
+			<a href='{{ "/articles/"+art._id }}'>
+				{{ art.title }}
+				
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+
+	
+</div>
+<!-- {% include "avatarModal.html" %} -->
+{% endblock %}

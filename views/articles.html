@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div style="padding: 20px;">
+	<h1> {{ atical.title }} </h1>
+	<h2 style="margin-left: 20px;font-size: 22px">---- 作者：{{ atical.author }}</h2>
+	<article>
+	{{ atical.content | safe }}
+	</article>
+	<hr>
+	<div>评论</div>
+	<form action="/articles" method="post">
+		
+		<textarea name="content" placeholder="评论内容"></textarea>
+		<button type="submit" style="display: block">提交</button>
+	</form>
+	
+	<hr>
+	<div>
+	<div>精彩评论</div>
+	{% for com in articles %}
+	<h4 style="font-weight: bolder" style="margin-left: 10px">{{ com.author }}</h4>
+	<article style="margin-left: 20px">
+		{{ com.content }}
+	</article>
+	<hr>
+	{% endfor %}
+</div>
+</div>
+{% endblock %}

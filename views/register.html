@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+
+{% block body %}
+	<div style="min-width: 300px; padding: 20px; width: 35%; border: 1px solid #ddd; border-radius: 8px; margin: 0 auto" >
+		<h1 style="font-size: 28px;text-align: center">
+			欢迎注册
+		</h1>
+		<form method="POST" action="/register">
+			<div class="form-group">
+			    <label for="exampleInputEmail1">用户名</label>
+			    <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
+		   </div>
+		   <p id="errMessage1" style="color: red;">{{ errMessage1 }}</p>
+		   <p style="color: red;">{{ check.userErr }}</p>
+		   <div class="form-group">
+			    <label for="exampleInputPassword1">密码</label>
+			    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  		   </div>
+  		   <p id="errMessage2" style="color: red;">{{ errMessage2 }}</p>
+  		   <div class="form-group">
+			    <label for="exampleInputPassword1">验证密码</label>
+			    <input type="password" name="password1" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  		   </div>
+  		   <p id="errMessage3" style="color: red;">{{ errMessage3 }}</p>
+  		   <div class="form-group">
+			    <label for="exampleInputEmail1">手机号码</label>
+			    <input type="text" name="phone" class="form-control" id="exampleInputEmail2" placeholder="Tellphone">
+		   </div>
+		   <p id="errMessage4" style="color: red;">{{ errMessage4 }}</p>
+  		   <div class="form-group">
+			    <label for="exampleInputEmail1">邮箱</label>
+			    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email" name="email">
+  		  </div>
+  		  
+  		   <p id="errMessage5" style="color: red;">{{ errMessage5 }}</p>
+
+			 <div class="form-group">
+			    <label for="exampleInputEmail1">验证码</label>
+			    <div class="input-group">
+			      <input type="text" name="captcha" class="form-control" id="exampleInputAmount" placeholder="点击图片重新获取">
+			      <div class="input-group-addon" style="padding: 0">
+			      <button style="padding: 0" class="btn btn-default" onclick="getCaptcha()" type="button">
+			        <img id="captcha" style="width: 130px;" alt="验证码" src='{{ "data:image/jpeg;base64," + captcha }}'/> 
+			        </button>
+			      </div>
+			    </div>    
+			  </div>
+			  <p id="errMessage" style="color: red;">{{ errMessage }}</p>
+  		  <button type="submit" class="btn btn-lg btn-primary btn-block">
+   			<i class="glyphicon glyphicon-ok"></i>
+  			提 交
+  		</button>
+  
+		</form>
+		
+	</div>
+	<script>
+		window.onload=function(){
+			function getStrLength(str){
+				return str.replace(/[\u4e00-\u9fa5]/g,"aa").length
+
+			}
+			var aForm=document.forms[0];
+			//用户验证
+			var oUser=aForm.username;
+			var Err1=document.getElementById("errMessage1");
+			oUser.onblur=function(){
+				var	reg1=/^[0-9]+$/g;
+				var reg2=/[\w|\u4e00-\u9fa5]+/g;
+				if(reg1.test(oUser.value) || !reg2.test(oUser.value)){
+					Err1.innerHTML="用户名仅支持中英文、数字和下划线,且不能为纯数字"
+				}else if(getStrLength(oUser.value)>8){
+					Err1.innerHTML="用户名不能超过7个汉字或14个字符"
+				}else{
+					Err1.innerHTML="";
+				}
+
+
+			}
+			//密码验证
+			var oPass=aForm.password;
+			var Err2=document.getElementById("errMessage2");
+			oPass.onblur=function(){
+
+				var	reg1=/^[0-9]+$/g;
+				var reg5=/[\da-z\~\!\@\#\$\%\^\&\*\(\)\<\>\.]+/gi;
+            	var reg6=/\s/g;
+				console.log(oPass.value);
+				if(getStrLength(oPass.value)<=16 && getStrLength(oPass.value)>=6){
+					Err2.innerHTML=""
+				}else{
+					return Err2.innerHTML="密码位6~14个字符,不能以数字为开头";
+				}
+				if(reg1.test(oPass.value)){
+					return Err2.innerHTML="密码格式不正确，不能为纯数字";
+
+				}else{
+					Err2.innerHTML="";
+				}
+
+				if(!reg5.test(oPass.value)){
+					return Err2.innerHTML="密码格式不正确";
+
+				}else{
+					Err2.innerHTML="";
+				}
+				if(!reg6.test(oPass.value)){
+					Err2.innerHTML="";
+
+				}else{
+					Err2.innerHTML="密码格式不正确";
+				}
+			}
+			//密码确认验证
+			var oPassr=aForm.password1;
+			var Err3=document.getElementById("errMessage3");
+			oPassr.onblur=function(){
+				if(oPassr.value != oPass.value){
+					Err3.innerHTML="密码验证错误！";
+
+				}else{
+					Err3.innerHTML="";
+				}
+			}
+			//手机号码验证
+			var oPhone=aForm.phone;
+			var Err4=document.getElementById("errMessage4");
+			oPhone.onblur=function(){
+				var reg3= /1[3578][\d]{9}/;
+				if(!reg3.test(oPhone.value)){
+					Err4.innerHTML="手机格式错误,必须填写真实的手机号码！";
+
+				}else{
+					Err4.innerHTML="";
+				}
+
+			}
+			//邮箱验证
+			var oEmail=aForm.email;
+			var Err5=document.getElementById("errMessage5"); 
+			oEmail.onblur=function(){
+				var reg=/^\w+@[a-z0-9]+\.[a-z]+$/i;
+				if(reg.test(oEmail.value)){
+					Err5.innerHTML="";
+
+				}else{
+					Err5.innerHTML="邮箱密码格式错误！";
+				}
+
+			}
+
+
+		}
+	</script>
+	<script>
+	    function getCaptcha() {
+	      $.ajax("/captcha", {
+	        type: "GET",
+	        success: function(data) {
+	          $("#captcha").attr("src", "data:image/jpeg;base64," + data);
+	        }
+	      })
+	       setTimeout(function() {
+      		document.getElementById("errMessage").innerHTML = "";
+    		}, 5000);
+	    }
+	</script>
+
+{% endblock %}

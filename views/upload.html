@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div style="width: 400px; border: 1px solid #ddd">
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">名称</label>
+    <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Username">
+  </div>
+  <form action="/user/setavatar" method="post" enctype="multipart/form-data" id="avatar">
+  <div class="form-group">
+    <label for="exampleInputEmail1">图片</label>
+    <input type="file" name="avatar" class="form-control" id="exampleInputEmail1" placeholder="Username">
+  </div>
+  </form>
+ <!--  {% if imgPath %}
+ <div>
+ 	<img style="max-width: 200px;" for="图片" src="{{ imgPath }}"/>
+ </div>
+ {% endif %} -->
+  <button type="button" class="btn btn-lg btn-primary btn-block">
+  <i class="glyphicon glyphicon-asterisk"></i>
+  提 交</button>
+
+</div>
+<script  type="text/javascript" charset="utf-8" async defer>
+	function submit(){
+		$("#avatar").submit();
+	}
+</script>
+
+{% endblock %}
