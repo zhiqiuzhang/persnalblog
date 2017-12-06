@@ -1,4 +1,4 @@
-# persnalblog
+# personalblog
 1.基于Node.js,运用express框架、Nunjucks模板引擎、Mongodb数据库开发;
 
 2.包括博客首页、个人登录页面、个人注册页面、个人中心、编写文章页面，发表文章、发表评论、退出登录的功能;
